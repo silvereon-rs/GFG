@@ -1,29 +1,32 @@
-class Solution{   
-public:
-    bool isSubsetSum(int N, int arr[], int sum){
-        // code here 
-        bool t[N+1][sum+1];
-        for(int i=0;i<N+1;i++){
-            for(int j=0;j<sum+1;j++){
-                if(i==0){
-                    t[i][j]=false;
-                }
-                if(j==0){
-                    t[i][j]=true;
-                }
-            }
-        }
-        
-        for(int i=1;i<N+1;i++){
-            for(int j=1;j<sum+1;j++){
-                if(arr[i-1]<=j){
-                    t[i][j]= (t[i-1][j-arr[i-1]] || t[i-1][j]);
-                }
-                else{
-                    t[i][j]=t[i-1][j];
-                }
-            }
-        }
-        return t[N][sum];
+class Solution
+{
+    public:
+    //Function to return max value that can be put in knapsack of capacity W.
+    
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+       // Your code here
+       int t[n+1][W+1];
+       memset(t,-1,sizeof(t));
+       
+       for(int i=0;i<n+1;i++){
+           for(int j=0;j<W+1;j++){
+               if(j==0 || i==0){
+                   t[i][j]=0;
+               }
+           }
+       }
+       
+       for(int i=1;i<n+1;i++){
+           for(int j=1;j<W+1;j++){
+               if(wt[i-1]<=j){
+                   t[i][j]=max(val[i-1]+t[i-1][j-wt[i-1]],t[i-1][j]);
+               }
+               else{
+                   t[i][j]=t[i-1][j];
+               }
+           }
+       }
+       return t[n][W];
     }
 };
